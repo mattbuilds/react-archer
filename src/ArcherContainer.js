@@ -146,6 +146,7 @@ export class ArcherContainer extends React.Component<Props, State> {
     strokeColor: '#f00',
     strokeWidth: 2,
     svgContainerStyle: {},
+    scale: 1,
   };
 
   componentDidMount() {
@@ -199,7 +200,11 @@ export class ArcherContainer extends React.Component<Props, State> {
     }
     const absolutePosition = computeCoordinatesFromAnchorPosition(position, rect);
 
-    return absolutePosition.substract(parentCoordinates);
+    let retPos = absolutePosition.substract(parentCoordinates);
+    retPos.x = retPos.x * this.props.scale;
+    retPos.y = retPos.y * this.props.scale;
+      
+    return retPos;
   };
 
   _registerTransitions = (elementId: string, newSourceToTargets: SourceToTargetType[]): void => {
